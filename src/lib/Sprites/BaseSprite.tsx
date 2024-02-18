@@ -7,8 +7,16 @@ export class BaseSprite {
     this.y = y;
   }
 
-  move(x: number = 0, y: number = 0){
+  protected move(x: number = 0, y: number = 0) {
     this.x += x;
-    this.y += y
+    this.y += y;
+  }
+
+  protected moveCheckingWalls(x, y, walls) {
+    walls.forEach(wall => {
+
+    });
+
+    return this.move(x, y);
   }
 }

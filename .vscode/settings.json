@@ -1,7 +1,7 @@
 {
   "code-runner.executorMap": {
     "javascript": "node",
-    "typescript": "npx ts-node --files",
+    "typescript": "clear && npx ts-node --files",
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
     "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "zig": "zig run",

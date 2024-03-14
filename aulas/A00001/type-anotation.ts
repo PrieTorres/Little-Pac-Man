@@ -14,7 +14,12 @@ function concatStrings(...args: string[]): string {
   return args.reduce((total, val) => total += val, "");
 }
 
-// ? Funções ----------------------------------------------------------------------------------
+// --- readonly arrays
+const array1: readonly string[] = ["nome", "sobrenome"];
+const array2: ReadonlyArray<string> = ["nome", "sobrenome"];
+
+
+// ? Funções ---------------------------------------------------------------------------------- //
 function soma(x: number, y: number): number {
   return x + y;
 }
@@ -24,8 +29,22 @@ const div: (x: number, y: number) => number = (x, y) => x / y;
 function x() { console.log() };
 function y(): void { console.log() };
 
+// ? Tupla ----------------------------------------------------------------------------------------- //
+const dados: readonly [number, string] = [1, "Nome"];
+const dados1: [number, string, string] = [1, "Nome", "teste"];
+const dados2: [number, string, string?] = [1, "Nome"];
+const dados3: [number, string, ...string[]] = [1, "Nome"];
 
-// ? objetos -----------------------------------------------------------------------------------
+dados[0] = 1; // erro
+dados.push("aaa"); // erro
+dados1.push("aaa");
+dados1[0] = 1;
+dados2[0] = 1;
+
+dados[2] = "teste" // errro não pode atribiur valor a undefenid
+
+
+// ? objetos ------------------------------------------------------------------------------------- //
 const obj1: {
   nome: string;
   idade: number;

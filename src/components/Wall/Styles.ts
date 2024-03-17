@@ -1,8 +1,12 @@
-import styled, { css } from "styled-components";
-import { Wall } from "./Wall";
+import styled, { css, CSSObject, DefaultTheme } from "styled-components";
+import { Wall, WallProps } from "./Wall";
 
-export const Container = styled(Wall)`
-  ${({ theme, positionX, positionY, width, height }) => css`
+interface ContainerProps extends WallProps {
+  theme: DefaultTheme;
+}
+
+export const Container = styled(Wall)<ContainerProps>`
+  ${({ theme, positionX, positionY, width, height }: ContainerProps) => css`
     color: ${theme.colors.white};
     position: absolute;
     left: ${positionX};
@@ -10,4 +14,4 @@ export const Container = styled(Wall)`
     width: ${`${width}%`};
     height: ${`${height}%`};
   `}
-`;
+` as React.ComponentType<ContainerProps & CSSObject>;

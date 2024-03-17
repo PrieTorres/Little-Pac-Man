@@ -1,4 +1,9 @@
 import { createGlobalStyle, css } from "styled-components";
+import { theme } from "./theme";
+
+export interface ThemeProps {
+  theme: object;
+}
 
 export const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
@@ -14,7 +19,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body{
-    ${({ theme }) => css`
+    ${({ theme } : ThemeProps) => css`
       font-size: ${theme.font.size.medium};
       font-family: "Courier New", Courier, monospace;
       background: #222;

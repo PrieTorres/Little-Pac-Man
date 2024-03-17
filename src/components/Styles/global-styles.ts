@@ -16,10 +16,10 @@ export const GlobalStyles = createGlobalStyle`
   body{
     ${({ theme }) => css`
       font-size: ${theme.font.size.medium};
-      font-family: 'Courier New', Courier, monospace;
-      background: #888;
+      font-family: "Courier New", Courier, monospace;
+      background: #222;
       background: ${theme.colors.mainBg};
-      font-family: ${({ theme }) => theme.font.family.default}
+      font-family: ${({ theme }) => theme.font.family.default};
     `}
   }
 

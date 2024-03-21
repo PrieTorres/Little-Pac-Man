@@ -1,7 +1,7 @@
 import React from "react";
 import * as Styled from "./styles";
 
-interface WallProps {
+export interface WallProps {
   positionX: number;
   positionY: number;
   width: number;

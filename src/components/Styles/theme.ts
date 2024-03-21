@@ -9,7 +9,7 @@ export const theme = {
   font: {
     family: {
       default: "'Open sans', sans-serif",
-      secondary: "'Montserrat', sans-serif"
+      secondary: "'Montserrat', sans-serif",
     },
     size: {
       small_device_small: "0.8rem",
@@ -38,4 +38,4 @@ export const theme = {
       xhuge: "6.4rem",
     },
   },
-};
+} as const;

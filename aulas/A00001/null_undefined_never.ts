@@ -1,5 +1,18 @@
 // undefined é sempre que o valor não foi definido
-export let x;
+let x;
+x = "a";
+x = 9;
+
+//unknown, sempre que não sabe exatamente o tipo que vai vir, funciona como um any
+let y: unknown;
+
+y = "x";
+y = 800;
+
+console.log(x + y); // precisa checar o tipo
+if (typeof y === "number") {
+  console.log(x + y);
+}
 
 // parametros opcionais sempre podem ocasionar um undefined
 export function creatPerson(

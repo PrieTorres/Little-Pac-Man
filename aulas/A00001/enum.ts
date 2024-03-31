@@ -22,7 +22,7 @@ enum Cores {
 }
 
 function setColor(cor: Cores): void {
-  console.log(Colors[cor]);
+  console.log(Cores[cor]);
 }
 
 setColor(Cores.red);

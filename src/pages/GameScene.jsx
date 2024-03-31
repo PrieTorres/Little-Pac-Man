@@ -1,8 +1,3 @@
 export const GameScene = () => {
-
-    return (
-        <div>
-            
-        </div>
-    );
-}
+  return <div>oi</div>;
+};

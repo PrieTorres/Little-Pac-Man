@@ -78,3 +78,7 @@ obj1.naoAlteravel = false;
 
 
 console.log(`${nome} ${obj1.propriedadeOpcional}`);
+
+// ? null e undefined --------------------------------------------------------------------- //
+
+// cuidade com params opcionais, todo paramentro opcional pode ser undefined

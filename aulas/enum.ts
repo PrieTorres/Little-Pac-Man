@@ -7,7 +7,7 @@ enum Colors {
   AZUL, // 1
   AMARELO, // 2
   ROXO = "purple",
-  VERDE, // sem valor para automaticamente atribuir
+  // VERDE, // sem valor para automaticamente atribuir
   VERDE1 = 1001,
   ROSA, // funciona a partir da atribuição de número acima
 }
@@ -24,6 +24,12 @@ enum Cores {
 function setColor(cor: Cores): void {
   console.log(Cores[cor]);
 }
+
+function getColor(cor: keyof typeof Cores): string {
+  return Cores[cor];
+}
+
+getColor("red");
 
 setColor(Cores.red);
 setColor(123);

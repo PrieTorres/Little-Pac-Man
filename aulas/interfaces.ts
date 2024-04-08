@@ -16,5 +16,3 @@ export class Pessoa implements TipoPessoa {
     return this.nome + " " + this.sobrenome;
   }
 }
-
-

@@ -6,7 +6,7 @@ type TemIdade = { sobrenome: string; };
 type Pessoa1 = TemIdade | TemNome | TemSobrenome; // pode ter qualquer um dos items
 type Pessoa2 = TemIdade & TemNome & TemSobrenome; // precisa ter todos os tipos
 
-export const pessoa1: Pessoa1 = { // ao avisa q os atributos sao opcionais
+export const pessoa1: Pessoa1 = { // nao avisa pq os atributos sao opcionais
   nome: "aaa",
 };
 

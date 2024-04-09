@@ -11,5 +11,6 @@ export interface WallProps {
 }
 
 export const Wall: React.FC<WallProps> = (props) => {
-  return <Styled.Container {...props} />;
+  //<Styled.Container {...props} />
+  return <div>wall</div>;
 };

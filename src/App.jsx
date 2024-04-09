@@ -2,8 +2,8 @@ import React from "react";
 import "./App.scss";
 import { GameScene } from "./pages/GameScene";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./components/styles/theme";
-import { GlobalStyles } from "./components/styles/global-styles";
+import { theme } from "./components/Styles/theme";
+import { GlobalStyles } from "./components/Styles/global-styles";
 
 function App() {
   return (

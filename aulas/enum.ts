@@ -2,7 +2,7 @@
 // quado tem vário valores e precisa enumerar eles
 
 // atribui valores automaticamente
-enum Colors {
+enum Colorss {
   VERMELHO, // 0 // = 1 assumiria os valores sequenciais as utras chaves
   AZUL, // 1
   AMARELO, // 2
@@ -12,10 +12,10 @@ enum Colors {
   ROSA, // funciona a partir da atribuição de número acima
 }
 
-console.log(Colors);
-console.log(Colors[0]);
-console.log(Colors[100]); // não alerta a valores não existentes
-console.log(Colors.VERMELHO);
+console.log(Colorss);
+console.log(Colorss[0]);
+console.log(Colorss[100]); // não alerta a valores não existentes
+console.log(Colorss.VERMELHO);
 
 enum Cores {
   red = "#FF0000",

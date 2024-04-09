@@ -1,24 +1,20 @@
-import { LegacyRef, MutableRefObject } from "react";
+import React, { forwardRef, Ref } from "react";
+
 interface CanvasPropsType {
   id: string;
-  canvasRef:  MutableRefObject<HTMLCanvasElement | undefined>;
   height: number;
   width: number;
-  canvasStyle: React.CSSProperties;
+  canvasStyle?: React.CSSProperties;
 }
 
-const Canvas = ({ width, height, canvasStyle, canvasRef, id }: CanvasPropsType) => {
+const Canvas = forwardRef((props: CanvasPropsType, ref: Ref<HTMLCanvasElement>) => {
+  const { width, height, canvasStyle, id } = props;
+
   return (
-    <canvas
-      width={width}
-      height={height}
-      style={canvasStyle}
-      ref={canvasRef}
-      id={id}
-    >
-      Navegador sem suporte ao canvas ;( tente usar o google
+    <canvas width={width} height={height} style={canvasStyle} ref={ref} id={id}>
+      Navegador sem suporte ao canvas ;( tente usar o Google Chrome
     </canvas>
   );
-};
+});
 
 export default Canvas;

@@ -1,9 +1,4 @@
-export interface wall {
-  x: number
-  y: number
-  width: number
-  heigth: number
-}
+import { Colors } from "../../components/Styles/COLORS";
 
 export class Wall {
   x: number
@@ -16,5 +11,16 @@ export class Wall {
     this.y = y;
     this.width = width;
     this.heigth = height;
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    ctx.fillStyle = Colors.white;
+
+    ctx.fillRect(
+      this.x,
+      this.y,
+      this.width,
+      this.heigth
+    );
   }
 }

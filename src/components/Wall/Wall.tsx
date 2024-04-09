@@ -1,5 +1,5 @@
 import React from "react";
-import * as Styled from "./styles";
+import * as Styled from "./Styles";
 import { DefaultTheme } from "styled-components/dist/types";
 
 export interface WallProps {

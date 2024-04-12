@@ -7,7 +7,7 @@ interface ContainerProps extends WallProps {
 }
 
 export const Container = styled(Wall)<ContainerProps>`
-  ${({ theme, positionX, positionY, width, height, }: ContainerProps) => css`
+  ${({ theme, positionX, positionY, width, height }: ContainerProps) => css`
     color: ${theme.colors.white};
     position: absolute;
     left: ${positionX};

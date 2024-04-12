@@ -21,6 +21,10 @@ enum Cores {
   red = "#FF0000",
 }
 
+const Cores2 = {
+  red: "#FF0000",
+};
+
 function setColor(cor: Cores): void {
   console.log(Cores[cor]);
 }
@@ -29,7 +33,12 @@ function getColor(cor: keyof typeof Cores): string {
   return Cores[cor];
 }
 
+function getColor2(cor: keyof typeof Cores2): string {
+  return Cores2[cor];
+}
+
 getColor("red");
 
 setColor(Cores.red);
 setColor(123);
+getColor2("red");

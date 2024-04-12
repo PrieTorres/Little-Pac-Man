@@ -1,3 +1,5 @@
+import { Colors } from "./COLORS";
+
 export const theme = {
   colors: {
     mainBg: "#aeaeae",
@@ -5,6 +7,7 @@ export const theme = {
     mainColor: "#000",
     primaryColor: "#000",
     secondaryColor: "#eee",
+    ...Colors,
   },
   font: {
     family: {

@@ -1,5 +1,5 @@
 import React from "react";
-import * as Styled from "./styles";
+import * as Styled from "./Styles";
 import { DefaultTheme } from "styled-components/dist/types";
 
 export interface WallProps {
@@ -11,5 +11,6 @@ export interface WallProps {
 }
 
 export const Wall: React.FC<WallProps> = (props) => {
-  return <Styled.Container {...props} />;
+  //<Styled.Container {...props} />
+  return <div>wall</div>;
 };

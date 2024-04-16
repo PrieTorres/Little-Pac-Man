@@ -10,7 +10,14 @@ export interface WallProps {
   theme: DefaultTheme;
 }
 
-export const Wall: React.FC<WallProps> = (props) => {
-  //<Styled.Container {...props} />
-  return <div>wall</div>;
+export const Wall: React.FC<WallProps> = (props: WallProps) => {
+  return (
+    <Styled.Container
+      positionX={props.positionX}
+      positionY={props.positionY}
+      width={props.width}
+      height={props.height}
+      theme={props.theme}
+    />
+  );
 };

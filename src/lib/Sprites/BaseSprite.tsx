@@ -11,10 +11,21 @@ export class BaseSprite {
   image?: HTMLImageElement;
   isLoaded?: boolean;
 
-  constructor(
-    { x = 0, y = 0, width, height, color, imageSrc }: 
-    { x: number, y: number, width: number, height: number, color?: Colors, imageSrc?: string }
-  ) {
+  constructor({
+    x = 0,
+    y = 0,
+    width,
+    height,
+    color,
+    imageSrc,
+  }: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    color?: Colors;
+    imageSrc?: string;
+  }) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -24,19 +35,14 @@ export class BaseSprite {
   }
 
   #move(x: number = 0, y: number = 0) {
-    this.x += x;
-    this.y += y;
+    this.x = x;
+    this.y = y;
   }
 
   protected drawSquare(ctx: CanvasRenderingContext2D): void {
     ctx.fillStyle = this.color ?? "#000";
 
-    ctx.fillRect(
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   protected drawImage(ctx: CanvasRenderingContext2D): void {
@@ -44,39 +50,75 @@ export class BaseSprite {
     this.image.src = this.imageSrc ?? "";
     this.image.onload = () => {
       this.isLoaded = true;
-    };
-
-    if (this.isLoaded)
       ctx.drawImage(
-        this.image,
-        this.x,
-        this.y,
+        this.image as CanvasImageSource,
+        this.x + this.width / 2,
+        this.y + this.height / 2,
         this.width,
         this.height,
       );
+    };
   }
 
-  protected moveCheckingWalls(x: number, y: number, walls: Wall[]): void {
+  protected moveCheckingWalls({
+    top = 0,
+    bottom = 0,
+    right = 0,
+    left = 0,
+    walls,
+  }: {
+    top?: number;
+    bottom?: number;
+    right?: number;
+    left?: number;
+    walls: Wall[];
+  }): boolean {
     const newPosition = {
-      x: this.x + x,
-      y: this.y + y
-    }
+      x: this.x + right - left,
+      y: this.y + bottom - top,
+    };
 
-    if (this.checkHitWall(newPosition, walls)) return;
+    if (newPosition.x < 0) newPosition.x = 0;
+    if (window?.innerHeight && newPosition.x > window.innerWidth) newPosition.x = window.innerWidth;
 
-    return this.#move(x, y);
+    if (newPosition.y < 0) newPosition.y = 0;
+    if (window?.innerHeight && newPosition.y > window.innerHeight) newPosition.y = window.innerHeight;
+
+    if (this.checkHitWall(newPosition, walls)) return false;
+
+    this.#move(newPosition.x, newPosition.y);
+    return true;
   }
 
-  protected checkHitWall(position: { x: number, y: number }, walls: Wall[]): boolean {
+  protected checkHitWall(position: { x: number; y: number }, walls: Wall[]): boolean {
     for (const wall of walls) {
-      if (position.x === wall.x && position.y < (wall.y + wall.heigth) && position.y > wall.y) {
-        return false;
+      if (
+        position.x + this.width / 2 >= wall.x - wall.width &&
+        position.x - this.width / 2 <= wall.x &&
+        position.y + this.height > wall.y &&
+        position.y < wall.y + wall.heigth
+      ) {
+        return true;
       }
-      if (position.y === wall.y && position.x < (wall.x + wall.width) && position.x > wall.x) {
-        return false;
+      if (
+        position.y + this.height > wall.y - wall.heigth &&
+        position.y < wall.y &&
+        position.x - this.width / 2 <= wall.x + wall.width &&
+        position.x + this.width / 2 >= wall.x
+      ) {
+        return true;
       }
+
+      // if (
+      //   position.y + this.height > wall.y - wall.heigth &&
+      //   position.y < wall.y &&
+      //   position.x + this.width / 2 >= wall.x - wall.width &&
+      //   position.x - this.width / 2 <= wall.x
+      // ) {
+      //   return true;
+      // }
     }
 
-    return true;
+    return false;
   }
 }

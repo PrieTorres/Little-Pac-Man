@@ -7,8 +7,8 @@ export class PacManSprite extends BaseSprite {
   ctx: CanvasRenderingContext2D;
   vel: number;
   constructor({
-    x = 0,
-    y = 0,
+    x = 20,
+    y = 20,
     width,
     height,
     color,

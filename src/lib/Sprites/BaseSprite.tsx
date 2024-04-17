@@ -90,33 +90,49 @@ export class BaseSprite {
     return true;
   }
 
-  protected checkHitWall(position: { x: number; y: number }, walls: Wall[]): boolean {
-    for (const wall of walls) {
-      if (
-        position.x + this.width / 2 >= wall.x - wall.width &&
-        position.x - this.width / 2 <= wall.x &&
-        position.y + this.height > wall.y &&
-        position.y < wall.y + wall.heigth
-      ) {
-        return true;
-      }
-      if (
-        position.y + this.height > wall.y - wall.heigth &&
-        position.y < wall.y &&
-        position.x - this.width / 2 <= wall.x + wall.width &&
-        position.x + this.width / 2 >= wall.x
-      ) {
-        return true;
-      }
+  getPositionsCentered({ x, y, width, height }: { x: number; y: number; width: number; height: number }) {
+    const pos = {
+      top: y,
+      bottom: y + height / 2,
+      left: x,
+      right: x + width / 2,
+    };
 
-      // if (
-      //   position.y + this.height > wall.y - wall.heigth &&
-      //   position.y < wall.y &&
-      //   position.x + this.width / 2 >= wall.x - wall.width &&
-      //   position.x - this.width / 2 <= wall.x
-      // ) {
-      //   return true;
-      // }
+    return pos;
+  }
+  getPositions({ x, y, width, height }: { x: number; y: number; width: number; height: number }) {
+    const pos = {
+      top: y - height,
+      bottom: y + height,
+      left: x,
+      right: x + width,
+    };
+
+    return pos;
+  }
+
+  protected checkHitWall(position: { x: number; y: number }, walls: Wall[]): boolean {
+    const { top, bottom, left, right } = this.getPositionsCentered({
+      x: position.x,
+      y: position.y,
+      width: this.width,
+      height: this.height,
+    });
+
+    for (const wall of walls) {
+      const wallPositions = this.getPositions(wall);
+
+      const isCollapsed =
+        (top >= wallPositions.bottom &&
+          bottom <= wallPositions.top &&
+          left <= wallPositions.right &&
+          right >= wallPositions.left) ||
+        (bottom >= wallPositions.top &&
+          top <= wallPositions.bottom &&
+          left <= wallPositions.right &&
+          right >= wallPositions.left);
+
+      if (isCollapsed) return true;
     }
 
     return false;

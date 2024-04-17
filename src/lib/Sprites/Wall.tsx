@@ -8,7 +8,7 @@ export class Wall {
   x: number;
   y: number;
   width: number;
-  heigth: number;
+  height: number;
 
   constructor(x: number, y: number, width: number, height: number) {
     this.xPercent = x;
@@ -18,7 +18,7 @@ export class Wall {
     this.x = 0;
     this.y = 0;
     this.width = 0;
-    this.heigth = 0;
+    this.height = 0;
   }
 
   calcProportions(ctx: CanvasRenderingContext2D) {
@@ -30,7 +30,7 @@ export class Wall {
     this.x = xposition;
     this.y = yposition;
     this.width = widthPx;
-    this.heigth = heigthPx;
+    this.height = heigthPx;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -42,10 +42,10 @@ export class Wall {
       this.x = ctx.canvas.clientWidth - (this.width ?? 0);
     }
 
-    if ((this.y as number) >= ctx.canvas.clientHeight - (this.heigth ?? 0)) {
-      this.y = ctx.canvas.clientHeight - (this.heigth ?? 0);
+    if ((this.y as number) >= ctx.canvas.clientHeight - (this.height ?? 0)) {
+      this.y = ctx.canvas.clientHeight - (this.height ?? 0);
     }
 
-    ctx.fillRect(this.x as number, this.y as number, this.width as number, this.heigth as number);
+    ctx.fillRect(this.x as number, this.y as number, this.width as number, this.height as number);
   }
 }

@@ -2,7 +2,7 @@ export type WallMetadata = {
   x: number;
   y: number;
   width: number;
-  heigth: number;
+  height: number;
 };
 
 export const constantWalls = {
@@ -10,37 +10,37 @@ export const constantWalls = {
     x: 0,
     y: 0,
     width: 100,
-    heigth: 2,
+    height: 2,
   },
   linearHorizontalBottom: {
     x: 0,
     y: 100,
     width: 100,
-    heigth: 2,
+    height: 2,
   },
   linearVerticalRigth: {
     x: 100,
     y: 0,
     width: 2,
-    heigth: 100,
+    height: 100,
   },
   linearVerticalLeft: {
     x: 0,
     y: 0,
     width: 2,
-    heigth: 100,
+    height: 100,
   },
   "80VerticalLeft30Top": {
     x: 30,
     y: 0,
     width: 2,
-    heigth: 80,
+    height: 80,
   },
   "80VerticalLeft70Bottom": {
     x: 70,
     y: 20,
     width: 2,
-    heigth: 80,
+    height: 80,
   },
 };
 

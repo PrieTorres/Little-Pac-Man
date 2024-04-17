@@ -6,8 +6,8 @@ export const constructWalls = (
   wallsMetadata: Array<WallMetadata> = constantsMaps.lvl1.walls,
 ) => {
   return wallsMetadata.map((wallMetadata) => {
-    const { x, y, heigth, width } = wallMetadata;
-    const wall = new Wall(x, y, width, heigth);
+    const { x, y, height, width } = wallMetadata;
+    const wall = new Wall(x, y, width, height);
     wall.draw(ctx);
     return wall;
   });

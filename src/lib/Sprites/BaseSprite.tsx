@@ -45,10 +45,11 @@ export class BaseSprite {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
-  protected drawImage(ctx: CanvasRenderingContext2D): void {
+  protected drawImage(ctx: CanvasRenderingContext2D, onLoadCb?: CallableFunction): void {
     this.image = new Image(this.width, this.height);
     this.image.src = this.imageSrc ?? "";
     this.image.onload = () => {
+      if (typeof onLoadCb == "function") onLoadCb();
       this.isLoaded = true;
       ctx.drawImage(
         this.image as CanvasImageSource,

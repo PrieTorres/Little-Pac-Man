@@ -41,20 +41,25 @@ export class PacManSprite extends BaseSprite {
     left?: number;
     walls: Wall[];
   }): boolean {
-    this.ctx.clearRect(this.x, this.y, this.width, this.height);
-
     const hasMoved = super.moveCheckingWalls({ walls, top, left, right, bottom });
-    //if (hasMoved) {
-    this.draw();
-    //}
+    this.draw({
+      x: this.x - right + left,
+      y: this.y + top - bottom,
+      w: this.width,
+      h: this.height,
+    });
 
     return hasMoved;
   }
 
-  draw() {
-    this.ctx.fillStyle = this.color ?? Colors.white;
-
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    //this.drawImage(this.ctx);
+  draw(beforePositions?: { x: number; y: number; w: number; h: number }) {
+    this.drawImage(
+      this.ctx,
+      beforePositions
+        ? () => {
+            this.ctx.clearRect(beforePositions.x, beforePositions.y, beforePositions.w, beforePositions.h);
+          }
+        : undefined,
+    );
   }
 }

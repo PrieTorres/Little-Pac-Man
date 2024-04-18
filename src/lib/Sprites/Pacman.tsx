@@ -6,6 +6,7 @@ import pacmanImg from "../../assets/images/pacman.png";
 export class PacManSprite extends BaseSprite {
   ctx: CanvasRenderingContext2D;
   vel: number;
+
   constructor({
     x = 20,
     y = 20,
@@ -14,6 +15,7 @@ export class PacManSprite extends BaseSprite {
     color = Colors["yellow"],
     ctx,
     vel = 10,
+    rotation = 90,
   }: {
     x?: number;
     y?: number;
@@ -22,8 +24,9 @@ export class PacManSprite extends BaseSprite {
     color?: Colors;
     vel?: number;
     ctx: CanvasRenderingContext2D;
+    rotation?: number;
   }) {
-    super({ x: x, y: y, width, height, color, imageSrc: pacmanImg });
+    super({ x, y, width, height, color, imageSrc: pacmanImg, rotation });
     this.ctx = ctx;
     this.vel = vel;
   }

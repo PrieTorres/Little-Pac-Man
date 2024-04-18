@@ -1,5 +1,6 @@
 import { Colors } from "../../components/Styles/COLORS";
 import { Wall } from "./Wall";
+const TO_RADIANS = Math.PI / 180;
 
 export class BaseSprite {
   x: number;
@@ -10,6 +11,7 @@ export class BaseSprite {
   imageSrc?: string;
   image?: HTMLImageElement;
   isLoaded?: boolean;
+  rotation: number;
 
   constructor({
     x = 0,
@@ -18,6 +20,7 @@ export class BaseSprite {
     height,
     color,
     imageSrc,
+    rotation = 0,
   }: {
     x: number;
     y: number;
@@ -25,6 +28,7 @@ export class BaseSprite {
     height: number;
     color?: Colors;
     imageSrc?: string;
+    rotation?: number;
   }) {
     this.x = x;
     this.y = y;
@@ -32,6 +36,7 @@ export class BaseSprite {
     this.height = height;
     this.color = color;
     this.imageSrc = imageSrc;
+    this.rotation = rotation;
   }
 
   #move(x: number = 0, y: number = 0) {
@@ -45,10 +50,24 @@ export class BaseSprite {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
+  rotateContext = (ctx: CanvasRenderingContext2D, angle: number, callback: CallableFunction) => {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(angle * TO_RADIANS);
+    ctx.translate(-this.x, -this.y);
+
+    callback(ctx);
+
+    ctx.restore();
+  };
+
   protected drawImage(ctx: CanvasRenderingContext2D, onLoadCb?: CallableFunction): void {
+    this.rotateContext(ctx)
     this.image = new Image(this.width, this.height);
     this.image.src = this.imageSrc ?? "";
+    //this.image.style.transform = `rotate(${this.rotation}deg)`;
     this.image.onload = () => {
+      //if (this.image) this.image.style.transform = `rotate(180deg)`;
       if (typeof onLoadCb == "function") onLoadCb();
       this.isLoaded = true;
       ctx.drawImage(

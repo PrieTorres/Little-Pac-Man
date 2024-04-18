@@ -15,7 +15,7 @@ export const GameScene = () => {
   useEffect(() => {
     if (canvasRef?.current && canvasRef?.current instanceof HTMLCanvasElement) {
       const ctx = canvasRef.current.getContext("2d") as CanvasRenderingContext2D;
-      PacMan.current = new PacManSprite({ x: 0, y: 0, width: 100, height: 100, ctx });
+      PacMan.current = new PacManSprite({ x: 20, y: 20, width: 100, height: 100, ctx });
       Walls.current = constructWalls(ctx);
       PacMan.current.draw();
     }

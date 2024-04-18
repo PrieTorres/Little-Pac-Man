@@ -11,7 +11,7 @@ export class PacManSprite extends BaseSprite {
     y = 20,
     width,
     height,
-    color,
+    color = Colors["yellow"],
     ctx,
     vel = 10,
   }: {
@@ -41,21 +41,20 @@ export class PacManSprite extends BaseSprite {
     left?: number;
     walls: Wall[];
   }): boolean {
+    this.ctx.clearRect(this.x, this.y, this.width, this.height);
+
     const hasMoved = super.moveCheckingWalls({ walls, top, left, right, bottom });
-    if (hasMoved) {
-      this.ctx.clearRect(
-        this.x + left - right + this.width / 2,
-        this.y - bottom + top + this.height / 2,
-        this.width,
-        this.height,
-      );
-      this.drawImage(this.ctx);
-    }
+    //if (hasMoved) {
+    this.draw();
+    //}
 
     return hasMoved;
   }
 
   draw() {
-    this.drawImage(this.ctx);
+    this.ctx.fillStyle = this.color ?? Colors.white;
+
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    //this.drawImage(this.ctx);
   }
 }

@@ -38,14 +38,14 @@ export class Wall {
 
     this.calcProportions(ctx);
 
-    if ((this.x as number) >= ctx.canvas.clientWidth - (this.width ?? 0)) {
+    if (this.x >= ctx.canvas.clientWidth - (this.width ?? 0)) {
       this.x = ctx.canvas.clientWidth - (this.width ?? 0);
     }
 
-    if ((this.y as number) >= ctx.canvas.clientHeight - (this.height ?? 0)) {
+    if (this.y >= ctx.canvas.clientHeight - (this.height ?? 0)) {
       this.y = ctx.canvas.clientHeight - (this.height ?? 0);
     }
 
-    ctx.fillRect(this.x as number, this.y as number, this.width as number, this.height as number);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }

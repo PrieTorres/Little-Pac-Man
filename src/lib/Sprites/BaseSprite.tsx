@@ -52,8 +52,8 @@ export class BaseSprite {
       this.isLoaded = true;
       ctx.drawImage(
         this.image as CanvasImageSource,
-        this.x + this.width / 2,
-        this.y + this.height / 2,
+        this.x, // + this.width / 2,
+        this.y, // + this.height / 2,
         this.width,
         this.height,
       );
@@ -94,7 +94,7 @@ export class BaseSprite {
     const pos = {
       top: y,
       bottom: y + height / 2,
-      left: x,
+      left: x - width / 2,
       right: x + width / 2,
     };
 
@@ -102,7 +102,7 @@ export class BaseSprite {
   }
   getPositions({ x, y, width, height }: { x: number; y: number; width: number; height: number }) {
     const pos = {
-      top: y - height,
+      top: y,
       bottom: y + height,
       left: x,
       right: x + width,
@@ -112,7 +112,7 @@ export class BaseSprite {
   }
 
   protected checkHitWall(position: { x: number; y: number }, walls: Wall[]): boolean {
-    const { top, bottom, left, right } = this.getPositionsCentered({
+    const { top, bottom, left, right } = this.getPositions({
       x: position.x,
       y: position.y,
       width: this.width,
@@ -123,14 +123,15 @@ export class BaseSprite {
       const wallPositions = this.getPositions(wall);
 
       const isCollapsed =
-        (top >= wallPositions.bottom &&
-          bottom <= wallPositions.top &&
-          left <= wallPositions.right &&
-          right >= wallPositions.left) ||
-        (bottom >= wallPositions.top &&
-          top <= wallPositions.bottom &&
-          left <= wallPositions.right &&
-          right >= wallPositions.left);
+        top <= wallPositions.bottom && // >=
+        bottom >= wallPositions.top && // s
+        left <= wallPositions.right && // s
+        right >= wallPositions.left; // s
+      //|| // s
+      //(bottom >= wallPositions.top &&
+      //  top <= wallPositions.bottom &&
+      //  left <= wallPositions.right &&
+      //  right >= wallPositions.left);
 
       if (isCollapsed) return true;
     }

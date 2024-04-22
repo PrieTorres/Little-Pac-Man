@@ -62,22 +62,17 @@ export class BaseSprite {
   };
 
   protected drawImage(ctx: CanvasRenderingContext2D, onLoadCb?: CallableFunction): void {
-    this.rotateContext(ctx)
-    this.image = new Image(this.width, this.height);
-    this.image.src = this.imageSrc ?? "";
-    //this.image.style.transform = `rotate(${this.rotation}deg)`;
-    this.image.onload = () => {
-      //if (this.image) this.image.style.transform = `rotate(180deg)`;
-      if (typeof onLoadCb == "function") onLoadCb();
-      this.isLoaded = true;
-      ctx.drawImage(
-        this.image as CanvasImageSource,
-        this.x, // + this.width / 2,
-        this.y, // + this.height / 2,
-        this.width,
-        this.height,
-      );
-    };
+    this.rotateContext(ctx, this.rotation, () => {
+      this.image = new Image(this.width, this.height);
+      this.image.src = this.imageSrc ?? "";
+      //this.image.style.transform = `rotate(${this.rotation}deg)`;
+      this.image.onload = () => {
+        //if (this.image) this.image.style.transform = `rotate(180deg)`;
+        if (typeof onLoadCb == "function") onLoadCb();
+        this.isLoaded = true;
+        ctx.drawImage(this.image as CanvasImageSource, this.x, this.y, this.width, this.height);
+      };
+    });
   }
 
   protected moveCheckingWalls({
@@ -143,15 +138,10 @@ export class BaseSprite {
       const wallPositions = this.getPositions(wall);
 
       const isCollapsed =
-        top <= wallPositions.bottom && // >=
-        bottom >= wallPositions.top && // s
-        left <= wallPositions.right && // s
-        right >= wallPositions.left; // s
-      //|| // s
-      //(bottom >= wallPositions.top &&
-      //  top <= wallPositions.bottom &&
-      //  left <= wallPositions.right &&
-      //  right >= wallPositions.left);
+        top <= wallPositions.bottom &&
+        bottom >= wallPositions.top &&
+        left <= wallPositions.right &&
+        right >= wallPositions.left;
 
       if (isCollapsed) return true;
     }

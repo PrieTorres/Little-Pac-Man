@@ -33,7 +33,6 @@ export class PacManSprite extends BaseSprite {
     color = Colors["yellow"],
     ctx,
     vel = 5,
-    rotation = 90,
     status = imagePacman.GOING_LEFT,
   }: {
     x?: number;
@@ -43,10 +42,9 @@ export class PacManSprite extends BaseSprite {
     color?: Colors;
     vel?: number;
     ctx: CanvasRenderingContext2D;
-    rotation?: number;
     status?: imagePacman;
   }) {
-    super({ x, y, width, height, color, imageSrc: imagePaths[status], rotation });
+    super({ x, y, width, height, color, imageSrc: imagePaths[status] });
     this.ctx = ctx;
     this.vel = vel;
     this.status = status;

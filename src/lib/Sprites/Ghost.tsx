@@ -1,12 +1,12 @@
 import { Colors } from "../../components/Styles/COLORS";
 import { BaseSprite } from "./BaseSprite";
 import { Wall } from "./Wall";
-import pacmanImgLeft from "../../assets/images/pacman/pacman_left.png";
-import pacmanImgRigth from "../../assets/images/pacman/pacman_rigth.png";
-import pacmanImgBottom from "../../assets/images/pacman/pacman_bottom.png";
-import pacmanImgTop from "../../assets/images/pacman/pacman_top.png";
+import ghostImgLeft from "../../assets/images/ghosts/red_ghost_left.png";
+import ghostImgRigth from "../../assets/images/ghosts/red_ghost_left.png";
+import ghostImgBottom from "../../assets/images/ghosts/red_ghost_left.png";
+import ghostImgTop from "../../assets/images/ghosts/red_ghost_left.png";
 
-enum imagePacman {
+enum ghostImage {
   GOING_LEFT = "GOING_LEFT",
   GOING_RIGTH = "GOING_RIGHT",
   GOING_TOP = "GOING_TOP",
@@ -14,26 +14,28 @@ enum imagePacman {
 }
 
 const imagePaths = {
-  [imagePacman.GOING_LEFT]: pacmanImgLeft,
-  [imagePacman.GOING_RIGTH]: pacmanImgRigth,
-  [imagePacman.GOING_TOP]: pacmanImgTop,
-  [imagePacman.GOING_BOTTOM]: pacmanImgBottom,
+  [ghostImage.GOING_LEFT]: ghostImgLeft,
+  [ghostImage.GOING_RIGTH]: ghostImgRigth,
+  [ghostImage.GOING_TOP]: ghostImgBottom,
+  [ghostImage.GOING_BOTTOM]: ghostImgTop,
 };
 
-export class PacManSprite extends BaseSprite {
+export type GhostMovementTypes = "RANDOM" | "UNTILEND" | "ALWAYSLEFT" | "ALWAYSRIGHT" | "CORDINATES";
+
+export class GhostSprite extends BaseSprite {
   ctx: CanvasRenderingContext2D;
   vel: number;
-  status: imagePacman;
+  status: ghostImage;
 
   constructor({
-    x = 20,
-    y = 20,
+    x = 0,
+    y = 0,
     width = 20,
     height = 20,
     color = Colors["yellow"],
     ctx,
     vel = 5,
-    status = imagePacman.GOING_LEFT,
+    status = ghostImage.GOING_LEFT,
   }: {
     x?: number;
     y?: number;
@@ -42,12 +44,49 @@ export class PacManSprite extends BaseSprite {
     color?: Colors;
     vel?: number;
     ctx: CanvasRenderingContext2D;
-    status?: imagePacman;
+    status?: ghostImage;
   }) {
-    super({ x, y, width, height, color, imageSrc: imagePaths[status] });
+    super({
+      x: x || ctx.canvas.clientWidth - 100,
+      y: y || ctx.canvas.clientHeight - 100,
+      width,
+      height,
+      color,
+      imageSrc: imagePaths[status],
+    });
     this.ctx = ctx;
     this.vel = vel;
     this.status = status;
+  }
+
+  automaticMove({ movementType, walls }: { movementType?: GhostMovementTypes; walls: Wall[] }) {
+    switch (movementType) {
+      default:
+        return this.randomMove(walls);
+    }
+  }
+
+  randomMove(walls: Wall[], count: number = 0) {
+    if (count > 5) return {};
+    const randomZero = (num: number) => Math.floor(Math.random() * 2) * num;
+
+    const { left, bottom } = {
+      left: randomZero(this.vel),
+      bottom: randomZero(this.vel),
+    };
+
+    let { right, top } = {
+      right: 0,
+      top: 0,
+    };
+
+    if (left === 0) right = this.vel;
+    if (bottom === 0) top = this.vel;
+
+    const moved = this.move({ left, right, bottom, top, walls });
+    if (!moved) this.randomMove(walls, count + 1);
+
+    return { left, right, bottom, top };
   }
 
   move({
@@ -67,17 +106,17 @@ export class PacManSprite extends BaseSprite {
 
     if (right || left) {
       if (right < left) {
-        this.status = imagePacman.GOING_RIGTH;
+        this.status = ghostImage.GOING_RIGTH;
       } else {
-        this.status = imagePacman.GOING_LEFT;
+        this.status = ghostImage.GOING_LEFT;
       }
     }
 
     if (bottom || top) {
       if (bottom < top) {
-        this.status = imagePacman.GOING_TOP;
+        this.status = ghostImage.GOING_TOP;
       } else {
-        this.status = imagePacman.GOING_BOTTOM;
+        this.status = ghostImage.GOING_BOTTOM;
       }
     }
 

@@ -26,6 +26,12 @@ export class GhostSprite extends BaseSprite {
   ctx: CanvasRenderingContext2D;
   vel: number;
   status: ghostImage;
+  currentMoving?: {
+    left: number;
+    right: number;
+    bottom: number;
+    top: number;
+  };
 
   constructor({
     x = 0,
@@ -61,8 +67,17 @@ export class GhostSprite extends BaseSprite {
 
   automaticMove({ movementType, walls }: { movementType?: GhostMovementTypes; walls: Wall[] }) {
     switch (movementType) {
-      default:
+      case "RANDOM":
         return this.randomMove(walls);
+      default:
+        if (typeof this.currentMoving != "object") {
+          return this.randomMove(walls);
+        } else {
+          const moved = this.move({ ...this.currentMoving, walls });
+          if (!moved) {
+            return this.randomMove(walls);
+          }
+        }
     }
   }
 
@@ -85,6 +100,8 @@ export class GhostSprite extends BaseSprite {
 
     const moved = this.move({ left, right, bottom, top, walls });
     if (!moved) this.randomMove(walls, count + 1);
+
+    this.currentMoving = { left, right, bottom, top };
 
     return { left, right, bottom, top };
   }
@@ -137,8 +154,8 @@ export class GhostSprite extends BaseSprite {
       this.ctx,
       beforePositions
         ? () => {
-            this.ctx.clearRect(beforePositions.x, beforePositions.y, beforePositions.w, beforePositions.h);
-          }
+          this.ctx.clearRect(beforePositions.x, beforePositions.y, beforePositions.w, beforePositions.h);
+        }
         : undefined,
     );
   }

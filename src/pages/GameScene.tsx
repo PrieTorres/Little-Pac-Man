@@ -55,36 +55,16 @@ export const GameScene = () => {
 
     window.addEventListener("keydown", dispatchPacmanMovements);
 
-    () => {
+    return () => {
       removeEventListener("keydown", dispatchPacmanMovements);
       clearInterval(currentInterval);
     };
   }, []);
 
   useEffect(() => {
-    let count = 0; // TODO: put this logic inside ghost somehow;
-    let lastmovements = {};
-
     const ghostMovementInterval = setInterval(() => {
       Ghosts.current?.forEach((ghost) => {
-        if (count == 100 || count == 0) {
-          count = 1;
-          lastmovements = ghost.automaticMove({ walls: Walls.current as Wall[] });
-        }
-
-        const moved = ghost.move({
-          walls: Walls.current as Wall[],
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          ...lastmovements,
-        });
-        if (!moved) {
-          return (count = 0);
-        }
-
-        count++;
+        ghost.automaticMove({ walls: Walls.current as Wall[] });
       });
     }, 50);
 

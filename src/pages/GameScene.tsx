@@ -19,7 +19,7 @@ export const GameScene = () => {
       const ctx = canvasRef.current.getContext("2d") as CanvasRenderingContext2D;
       PacMan.current = new PacManSprite({ ctx });
       Walls.current = constructWalls(ctx);
-      Ghosts.current = [new GhostSprite({ ctx })];
+      Ghosts.current = [new GhostSprite({ ctx }), new GhostSprite({ ctx }), new GhostSprite({ ctx })];
       PacMan.current.draw();
       Ghosts.current.forEach((ghost) => ghost?.draw());
     }

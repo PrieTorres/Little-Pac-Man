@@ -154,8 +154,8 @@ export class GhostSprite extends BaseSprite {
       this.ctx,
       beforePositions
         ? () => {
-          this.ctx.clearRect(beforePositions.x, beforePositions.y, beforePositions.w, beforePositions.h);
-        }
+            this.ctx.clearRect(beforePositions.x, beforePositions.y, beforePositions.w, beforePositions.h);
+          }
         : undefined,
     );
   }

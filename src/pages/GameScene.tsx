@@ -47,17 +47,57 @@ export const GameScene = () => {
         }
       };
 
-      dispatchMovement(["w", "ArrowUp", "W"], { top: PacMan.current?.vel });
-      dispatchMovement(["s", "ArrowDown", "S"], { bottom: PacMan.current?.vel });
-      dispatchMovement(["a", "ArrowLeft", "A"], { left: PacMan.current?.vel });
-      dispatchMovement(["d", "ArrowRigth", "D"], { right: PacMan.current?.vel });
+      dispatchMovement(["w", "W"], { top: PacMan.current?.vel });
+      dispatchMovement(["s", "S"], { bottom: PacMan.current?.vel });
+      dispatchMovement(["a", "A"], { left: PacMan.current?.vel });
+      dispatchMovement(["d", "D"], { right: PacMan.current?.vel });
+    };
+
+    /* TODO:
+     * less code repeation
+     * pacman does not move when ghosts change direction
+     * ghos movement unstable
+     */
+    let ghostsCurrentInterval: string | number | NodeJS.Timeout | undefined;
+    const dispatchGhostMovements = (e: KeyboardEvent, indexGhost: number) => {
+      const ghost = Ghosts?.current?.[indexGhost];
+      if (!ghost || !Walls.current) return;
+
+      const dispatchMovement = (
+        keys: Array<string>,
+        moveData: { top?: number; bottom?: number; left?: number; right?: number },
+      ) => {
+        if (keys.includes(e.key)) {
+          clearInterval(currentInterval);
+          ghostsCurrentInterval = setInterval(() => {
+            const hasMoved = ghost.move({ ...moveData, walls: Walls.current as Wall[] });
+            if (!hasMoved) {
+              clearInterval(ghostsCurrentInterval);
+            }
+          }, 25);
+        }
+      };
+
+      dispatchMovement(["ArrowUp", "8"], { top: ghost.vel });
+      dispatchMovement(["ArrowDown", "2"], { bottom: ghost.vel });
+      dispatchMovement(["ArrowRight", "6"], { right: ghost.vel });
+      dispatchMovement(["ArrowLeft", "8"], { left: ghost.vel });
+    };
+
+    const dispatchAllGhostsMoves = (event: KeyboardEvent) => {
+      Ghosts.current?.forEach((ghost, i) => {
+        dispatchGhostMovements(event, i);
+      });
     };
 
     window.addEventListener("keydown", dispatchPacmanMovements);
+    window.addEventListener("keydown", dispatchAllGhostsMoves);
 
     return () => {
       removeEventListener("keydown", dispatchPacmanMovements);
+      removeEventListener("keydown", dispatchAllGhostsMoves);
       clearInterval(currentInterval);
+      clearInterval(ghostsCurrentInterval);
     };
   }, []);
 
